@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  boot-application:
+    image: jaydatt8124/expenseapp:latest
+    depends_on:
+      - dbservice
+    
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://dbservice:3306/ExpenseTraker?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+    # Map the application port to the host machine
+    #first 8080 is host port and second is container port
+      - "8081:8080"
+    container_name: boot-application-container
+    networks:
+      - boot-network2
+    
+
+  dbservice:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+    ports:
+    # Map the MySQL port to the host machine
+    #first 3307 is host port and second is container port
+      - "3307:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+
+    container_name: mysql-db-container
+    networks:
+      - boot-network2
+
+networks:
+    boot-network2:
+    
