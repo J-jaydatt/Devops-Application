@@ -17,7 +17,7 @@ services:
       - "8081:8080"
     container_name: boot-application-container
     networks:
-      - boot-network2
+      - boot-network
     
 
   dbservice:
@@ -34,8 +34,8 @@ services:
 
     container_name: mysql-db-container
     networks:
-      - boot-network2
+      - boot-network
 
 networks:
-    boot-network2:
+    boot-network:
     
